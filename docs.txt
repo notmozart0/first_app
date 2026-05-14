@@ -1,0 +1,6 @@
+DATA BASE : 
+six  tables (users , reviews , locals, places ,places_info , media )
+_______________________________________________________________________________________________________________________
+
+five folders (users+auth , places ,reviews ,media , middleware+db)
+
