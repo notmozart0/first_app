@@ -23,10 +23,6 @@ The database is built on a relational structure as illustrated in the project do
 - **Interactive Gallery**: High-quality visual content for every listed destination.
 - **Trusted Reviews**: A rating system to ensure quality and reliability for future travelers.
 
-## 🛠️ Tech Stack (Suggested)
-- **Database**: PostgreSQL / MySQL
-- **Backend**: Node.js / Python (FastAPI/Django)
-- **Frontend**: Flutter / React Native
 
 ---
 *Created as part of the Aswan Digital Transformation Initiative.*
