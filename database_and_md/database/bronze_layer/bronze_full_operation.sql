@@ -53,9 +53,9 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 			BEGIN
 			CREATE TABLE bronze.users (
 				user_id INT IDENTITY(1,1) PRIMARY KEY,
-				user_email NVARCHAR (MAX),
-				user_role NVARCHAR (MAX),
-				user_password NVARCHAR (70),
+				user_email NVARCHAR (255) UNIQUE NOT NULL,
+				user_role NVARCHAR (55),
+				user_password NVARCHAR (255) NOT NULL,
 				first_name NVARCHAR (50),
 				last_name NVARCHAR (50),
 				phone_number NVARCHAR(15) ,
@@ -91,7 +91,7 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 				discrption NVARCHAR (MAX) ,
 				phone_number NVARCHAR(15) ,
 				website_url NVARCHAR (MAX),
-				opening_hours NVARCHAR (MAX),
+				opening_hours NVARCHAR (55),
 				place_location NVARCHAR (MAX)
 				);
 			END 
