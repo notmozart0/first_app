@@ -9,7 +9,7 @@ it dosen't operate any data transaction  or cleanig (at least in this phase).
 to run the code properly you must run the entier code only once and if you want to load the 
 tables agine you must only run the next code: 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> (EXEC bronze.treating_tables;) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> (USE ToursimDatabase;  GO   EXEC bronze.treating_tables;) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 
 warnning: do not run the main code more than one time to avoid overwriting  or any possible  error.
 */
