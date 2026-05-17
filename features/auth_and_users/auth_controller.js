@@ -1,13 +1,15 @@
 //sign up function 
-
+const jwt_web_token = require("jsonwebtoken");
+const env = require("dotenv").config();
 const bcrypt = require("bcrypt");
-// testing user and to be replaced with datdbase 
+
 const users = [ {               first_name: 'ahmed',
     last_name: 'hello',
     phone_number: '012544',
     email: 'heo@fds',
     password: '$2b$10$ykC16qi2nV3HMYT4J1dzFOqCB3GxuQkQW4wAqg9O/185TJCPYjBPG'
     }];
+
 const sign_up= async (req,res)=> {
     try{
         
@@ -29,7 +31,7 @@ const sign_up= async (req,res)=> {
                   
                  email : req.body.email,
                 
-              
+                 role : "user" ,
                 password : hashed_password
             }
         )
@@ -53,23 +55,29 @@ const login = async (req,res)=>{
         const email = req.body.email;
         const unh_password = req.body.password;
        
-        const check_login =users.find((user)=> user.email === email );
-        if (!check_login ){
+        const e_user =users.find((user)=> user.email === email );
+        if (!e_user ){
             res.status(400).send("not there u may want to sign_up first")//.redirect
-        }else if (check_login){
-           const is_match = await bcrypt.compare (unh_password,check_login.password );
+        }else if (e_user){
+           const is_match = await bcrypt.compare (unh_password,e_user.password );
            if(is_match){
-            res.send("login succesfully");
+                 const access_token = jwt_web_token.sign({email :email},process.env.ACCESS_TOKEN,{expiresIn : "1m"});
+                 const refresh_token = jwt_web_token.sign({email :email},process.env.REFRESH_TOKEN,{expiresIn : "1m"});
+
+            
+            return res.json({
+                token : access_token
+            });
            }
-           res.send("not the password i expected ");
+          if (!is_match) {return res.send("not the password i expected ");}
                     
 
                 }
                 
         }
 
-        catch {
-        res.status (500).send(err)
+        catch(err) {
+        res.status (502).send(err.message )
 
                }
 }
