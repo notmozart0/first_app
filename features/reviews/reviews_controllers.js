@@ -52,7 +52,7 @@ const add_review =
     res.status(201).json(reviews);
 }
 
-const update_review = (req,res)=>{
+const update_review = (req,res)=>{                     //must check it it the owner of the comment
 
     const review_id = parseInt(req.params.review_id); 
     let updated_review = reviews.find(
@@ -69,7 +69,7 @@ const update_review = (req,res)=>{
 
 }
 
-const delete_review = (req,res)=>{
+const delete_review = (req,res)=>{                         // //must check it it the owner of the comment or admin
 
     const review_id = parseInt(req.params.review_id);
     reviews = reviews.filter(
