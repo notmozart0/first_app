@@ -53,9 +53,9 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 			BEGIN
 			CREATE TABLE bronze.users (
 				user_id INT IDENTITY(1,1) PRIMARY KEY,
-				user_email NVARCHAR (255) UNIQUE NOT NULL,
 				user_role NVARCHAR (55) NOT NULL
 						CHECK (user_role IN ('Admin', 'User')),
+				user_email NVARCHAR (255) UNIQUE NOT NULL,
 				user_password NVARCHAR (255) NOT NULL 
 						CHECK (LEN(user_password) > 8),
 				first_name NVARCHAR (50) NOT NULL,
@@ -89,13 +89,14 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 				place_id INT IDENTITY(1,1) PRIMARY KEY,
 				place_name NVARCHAR (70) NOT NULL,
 				place_type NVARCHAR (50) NOT NULL,
-				rateing DECIMAL(3, 2),
+				rating DECIMAL(3, 2),
 				discrption NVARCHAR (MAX) 
 						CHECK (LEN(discrption) > 10),
 				phone_number NVARCHAR(15) NOT NULL,
 				website_url NVARCHAR (MAX),
 				opening_hours NVARCHAR (55),
-				place_location NVARCHAR (MAX)
+				place_location NVARCHAR (MAX),
+				place_create_date DATETIME2 DEFAULT GETDATE()
 				);
 			END 
 					BULK INSERT bronze.places
@@ -123,7 +124,7 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 
 				place_id INT NULL,
 				local_id INT NULL,
-
+				rating DECIMAL(3, 2),
 				review_text NVARCHAR(MAX) NOT NULL,
 				review_date DATETIME2 DEFAULT GETDATE(),
 
@@ -198,6 +199,10 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 				place_id INT NOT NULL,
 				photo_url NVARCHAR (MAX),
 				caption NVARCHAR (MAX)
+
+				CONSTRAINT FK_media_places
+					FOREIGN KEY (place_id)
+					REFERENCES bronze.places(place_id),
 				);
 			END 
 					BULK INSERT bronze.media 
@@ -230,5 +235,3 @@ BEGIN CATCH
 		PRINT 'Error Message' + CAST (ERROR_STATE() AS NVARCHAR);
 		PRINT '=========================================='
 END CATCH
-
-
