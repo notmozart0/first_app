@@ -171,7 +171,8 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 				years_experience INT,
 				discrption NVARCHAR (MAX) 
 						CHECK (LEN(discrption) > 10),
-				local_photo VARBINARY(MAX)
+				local_photo VARBINARY(MAX),
+				local_create_date DATETIME2 DEFAULT GETDATE()
 				);
 			END 
 					BULK INSERT bronze.locals 
@@ -198,7 +199,8 @@ DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @b
 				photo_id INT IDENTITY(1,1) PRIMARY KEY,
 				place_id INT NOT NULL,
 				photo_url NVARCHAR (MAX),
-				caption NVARCHAR (MAX)
+				caption NVARCHAR (MAX),
+				media_create_date DATETIME2 DEFAULT GETDATE()
 
 				CONSTRAINT FK_media_places
 					FOREIGN KEY (place_id)
