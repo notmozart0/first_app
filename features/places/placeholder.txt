@@ -1,1 +1,134 @@
+const express = require('express');
+const fs = require('fs');
+const csv = require('csv-parser');
+
+const app = express();
+
+app.use(express.json());
+
+let places = [];
+
+fs.createReadStream('places.csv')
+
+  .pipe(csv())
+
+  .on('data', (row) => {
+
+    places.push(row);
+
+  })
+
+  .on('end', () => {
+
+    console.log('CSV File Successfully Processed');
+
+  });
+
+
+
+
+app.get('/', (req, res) => {
+
+  res.send("places");
+
+});
+
+
+
+app.get('/places', (req, res) => {res.json(places); });
+
+
+
+
+app.get('/places/:id', (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const place = places.find(p => p.place_id === id);
+    
+    if (place) {
+      res.json(place);
+    } else {
+      res.status(404).send("Place Not Found");
+    }
+  } catch (error) {
+    console.error("Error fetching place:", error);
+    res.status(500).send("Internal Server Error");
+  }
+    
+});
+
+
+app.post('/places', (req, res) => {
+
+  const new_place = {
+
+    place_id: req.body.place_id,
+
+    place_name: req.body.place_name,
+
+    place_type: req.body.place_type,
+
+    rating: req.body.rating,
+
+    description: req.body.description,
+
+    phone_number: req.body.phone_number,
+
+    website_url: req.body.website_url,
+
+    opening_hours: req.body.opening_hours,
+
+    place_location: req.body.place_location
+
+  };
+  places.push(new_place);
+
+const line = `\n${new_place.place_id},${new_place.place_name},${new_place.place_type},${new_place.rating},${new_place.description},${new_place.phone_number},${new_place.website_url},${new_place.opening_hours},${new_place.place_location}`;
+
+
+  fs.appendFileSync('places.csv', line);
+
+res.json({
+
+    message: "Place Added Successfully",
+
+    data: new_place
+
+  });
+
+
+});
+
+
+app.delete('/places/:id', (req, res) => {
+
+  const id = req.params.id;
+
+  const index = places.findIndex(
+    p => p.place_id === id
+  );
+
+  if (index !== -1) {
+
+    const deletedPlace = places.splice(index, 1)[1];
+
+    res.json({
+      message: "Place Deleted Successfully",
+      data: deletedPlace
+    });
+
+  } else {
+
+    res.status(404).send("Place Not Found");
+
+  }
+
+});
+
+app.listen(3000, () => {
+
+    console.log("Server Running On Port 3000");
+
+})
 
