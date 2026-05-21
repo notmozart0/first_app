@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 const role_function = {
     admin :[
-        "add_place","add_local","delet_place","delete_local","delete_comment"
+        "add_place","add_local","delete_place","delete_local","delete_comment"
     ],
     user : [
                   "get_profile"
