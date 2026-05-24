@@ -148,7 +148,9 @@ This project is licensed under the MIT License.
 
 For suggestions or collaboration:
 
-- Email: y.abdalla2611@gmail.com
+- Emails of the team members :
+   y.abdalla2611@gmail.com
+   yousefsherif5152@gmail.com
 - GitHub: https://github.com/yousef-M-2004/first_app
 
 ---
