@@ -2,8 +2,9 @@
 const jwt_web_token = require("jsonwebtoken");
 const env = require("dotenv").config();
 const bcrypt = require("bcrypt");
-
-const users = [ {               first_name: 'ahmed',
+// user example to test on
+const users = [ {             
+    first_name: 'ahmed',
     last_name: 'hello',
     phone_number: '012544',
     email: 'heo@fds',
@@ -65,7 +66,7 @@ const login = async (req,res)=>{
                  const access_token = jwt_web_token.sign({email :email,
                     role : "admin"}
                  ,process.env.ACCESS_TOKEN,{expiresIn : "30m"});
-                 const refresh_token = jwt_web_token.sign({email :email},process.env.REFRESH_TOKEN,{expiresIn : "1m"});
+                
 
             
             return res.json({
